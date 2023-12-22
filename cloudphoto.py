@@ -7,8 +7,8 @@ from func.manager import CloudPhotoManager
 def execute_command(args, app_manager):
     """Execute the appropriate command based on parsed arguments."""
     command_functions = {
-        'init': lambda: app_manager.init(input('aws_access_key_id == '), input('aws_secret_access_key == '),
-                                         input('bucket_name == ')),
+        'init': lambda: app_manager.init(input('bucket_name == '), input('aws_access_key_id == '),
+                                         input('aws_secret_access_key == ')),
         'upload': lambda: app_manager.upload(args.album, args.path),
         'download': lambda: app_manager.download(args.album, args.path),
         'list': lambda: app_manager.list(args.album),
