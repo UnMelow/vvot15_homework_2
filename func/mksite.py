@@ -9,7 +9,7 @@ from pathlib import Path
 
 
 def get_root_directory():
-    return pathlib.Path(__file__).parent
+    return pathlib.Path(__file__).parent.parent
 
 
 def get_albums_data(session, bucket):
@@ -77,7 +77,8 @@ def mksite_album(bucket, aws_access_key_id, aws_secret_access_key, endpoint_url,
             session.upload_file(album_path, bucket, f"album{i}.html")
 
         index_template = get_template("index.html")
-        rendered_index = jinja2.Template(index_template).render(albums=albums)
+        album_objects = [{'name': f'album{i}.html', 'album': album} for i, album in enumerate(albums, start=1)]
+        rendered_index = jinja2.Template(index_template).render(template_objects=album_objects)
         index_path = save_temporary_template(rendered_index)
         session.upload_file(index_path, bucket, "index.html")
 
